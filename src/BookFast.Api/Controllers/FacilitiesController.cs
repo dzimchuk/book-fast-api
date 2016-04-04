@@ -14,20 +14,20 @@ namespace BookFast.Api.Controllers
     [Authorize(Policy = "FacilityProviderOnly")]
     public class FacilitiesController : Controller
     {
-        private readonly IFacilityService facilityService;
-        private readonly IFacilityMapper facilityMapper;
+        private readonly IFacilityService service;
+        private readonly IFacilityMapper mapper;
 
-        public FacilitiesController(IFacilityService facilityService, IFacilityMapper facilityMapper)
+        public FacilitiesController(IFacilityService service, IFacilityMapper mapper)
         {
-            this.facilityService = facilityService;
-            this.facilityMapper = facilityMapper;
+            this.service = service;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IEnumerable<FacilityRepresentation>> List()
         {
-            var facilities = await facilityService.ListAsync();
-            return facilityMapper.MapFrom(facilities);
+            var facilities = await service.ListAsync();
+            return mapper.MapFrom(facilities);
         }
         
         [HttpGet("{id}")]
@@ -36,8 +36,8 @@ namespace BookFast.Api.Controllers
         {
             try
             {
-                var facility = await facilityService.FindAsync(id);
-                return new ObjectResult(facilityMapper.MapFrom(facility));
+                var facility = await service.FindAsync(id);
+                return new ObjectResult(mapper.MapFrom(facility));
             }
             catch (FacilityNotFoundException)
             {
@@ -50,8 +50,8 @@ namespace BookFast.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                var facility = await facilityService.CreateAsync(facilityMapper.MapFrom(facilityData));
-                return CreatedAtAction("Find", facilityMapper.MapFrom(facility));
+                var facility = await service.CreateAsync(mapper.MapFrom(facilityData));
+                return CreatedAtAction("Find", mapper.MapFrom(facility));
             }
 
             return HttpBadRequest();
@@ -64,8 +64,8 @@ namespace BookFast.Api.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var facility = await facilityService.UpdateAsync(id, facilityMapper.MapFrom(facilityData));
-                    return new ObjectResult(facilityMapper.MapFrom(facility));
+                    var facility = await service.UpdateAsync(id, mapper.MapFrom(facilityData));
+                    return new ObjectResult(mapper.MapFrom(facility));
                 }
 
                 return HttpBadRequest();
@@ -81,7 +81,7 @@ namespace BookFast.Api.Controllers
         {
             try
             {
-                await facilityService.DeleteAsync(id);
+                await service.DeleteAsync(id);
                 return new NoContentResult();
             }
             catch (FacilityNotFoundException)
