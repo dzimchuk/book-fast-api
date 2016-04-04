@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using BookFast.Api.Models;
 
 namespace BookFast.Api.Validation
 {
@@ -7,7 +8,7 @@ namespace BookFast.Api.Validation
     {
         public override bool IsValid(object value)
         {
-            var booking = value as CreateBookingViewModel;
+            var booking = value as BookingData;
             var now = DateTime.Now.Date;
             if (booking == null || booking.FromDate.Date < now || booking.ToDate.Date < now)
                 return true;

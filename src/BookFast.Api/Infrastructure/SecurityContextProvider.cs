@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using BookFast.Business;
 using BookFast.Contracts.Security;
 
@@ -10,22 +11,24 @@ namespace BookFast.Api.Infrastructure
 
         public string GetCurrentUser()
         {
-            if (Principal == null)
-                throw new System.Exception("Principal has not been initialized.");
-
-            return Principal.GetUserName();
+            return FindFirstValue(ClaimTypes.Name);
         }
 
         public string GetCurrentTenant()
         {
+            return FindFirstValue(BookFastClaimTypes.TenantId);
+        }
+
+        private string FindFirstValue(string claimType)
+        {
             if (Principal == null)
-                throw new System.Exception("Principal has not been initialized.");
+                throw new Exception("Principal has not been initialized.");
 
-            var tenantClaim = Principal.FindFirst(BookFastClaimTypes.TenantId);
-            if (tenantClaim == null)
-                throw new System.Exception("No tenant claim found.");
+            var claim = Principal.FindFirst(claimType);
+            if (claim == null)
+                throw new Exception($"Claim '{claimType}' was not found.");
 
-            return tenantClaim.Value;
+            return claim.Value;
         }
     }
 }
