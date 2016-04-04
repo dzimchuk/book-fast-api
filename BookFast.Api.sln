@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DCD38A3E-8081-4F35-9B78-FB27B49E95B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48008B7C-752A-4488-9477-9871AE8FC8ED}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		NuGet.config = NuGet.config
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookFast.Api", "src\BookFast.Api\BookFast.Api.xproj", "{3944FA6B-0397-4705-9DDA-439FF229126A}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookFast.Contracts", "src\BookFast.Contracts\BookFast.Contracts.xproj", "{754BFC88-B8FB-4462-95FD-47D5A670206D}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookFast.Business", "src\BookFast.Business\BookFast.Business.xproj", "{4EA41079-DEB5-4CA0-8F20-6EF57082ED8F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookFast.Data", "src\BookFast.Data\BookFast.Data.xproj", "{9398737E-2269-4B81-9EF8-834F8DB4EC61}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookFast.Search", "src\BookFast.Search\BookFast.Search.xproj", "{42397142-83EE-4969-9D6A-EF5E170B18CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3944FA6B-0397-4705-9DDA-439FF229126A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3944FA6B-0397-4705-9DDA-439FF229126A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3944FA6B-0397-4705-9DDA-439FF229126A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3944FA6B-0397-4705-9DDA-439FF229126A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{754BFC88-B8FB-4462-95FD-47D5A670206D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{754BFC88-B8FB-4462-95FD-47D5A670206D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{754BFC88-B8FB-4462-95FD-47D5A670206D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{754BFC88-B8FB-4462-95FD-47D5A670206D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EA41079-DEB5-4CA0-8F20-6EF57082ED8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EA41079-DEB5-4CA0-8F20-6EF57082ED8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EA41079-DEB5-4CA0-8F20-6EF57082ED8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EA41079-DEB5-4CA0-8F20-6EF57082ED8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9398737E-2269-4B81-9EF8-834F8DB4EC61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9398737E-2269-4B81-9EF8-834F8DB4EC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9398737E-2269-4B81-9EF8-834F8DB4EC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9398737E-2269-4B81-9EF8-834F8DB4EC61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42397142-83EE-4969-9D6A-EF5E170B18CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42397142-83EE-4969-9D6A-EF5E170B18CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42397142-83EE-4969-9D6A-EF5E170B18CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42397142-83EE-4969-9D6A-EF5E170B18CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3944FA6B-0397-4705-9DDA-439FF229126A} = {DCD38A3E-8081-4F35-9B78-FB27B49E95B1}
+		{754BFC88-B8FB-4462-95FD-47D5A670206D} = {DCD38A3E-8081-4F35-9B78-FB27B49E95B1}
+		{4EA41079-DEB5-4CA0-8F20-6EF57082ED8F} = {DCD38A3E-8081-4F35-9B78-FB27B49E95B1}
+		{9398737E-2269-4B81-9EF8-834F8DB4EC61} = {DCD38A3E-8081-4F35-9B78-FB27B49E95B1}
+		{42397142-83EE-4969-9D6A-EF5E170B18CA} = {DCD38A3E-8081-4F35-9B78-FB27B49E95B1}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,29 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "BookFast.Search Console Application",
+  "authors": [ "Andrei Dzimchuk" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "userSecretsId": "BookFast-7a05f44e-ec5c-45ce-aa48-d7d43becad32",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "BookFast.Business": "1.0.0-*",
+    "Microsoft.Azure.Search": "1.1.1",
+    "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+    "AutoMapper": "4.2.1"
+  },
+
+  "commands": {
+    "BookFast.Search": "BookFast.Search"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+  }
+}
