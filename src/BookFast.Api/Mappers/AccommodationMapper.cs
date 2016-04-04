@@ -37,9 +37,9 @@ namespace BookFast.Api.Mappers
             return Mapper.Map<IEnumerable<AccommodationRepresentation>>(accommodations);
         }
 
-        public AccommodationDetails MapFrom(AccommodationData viewModel)
+        public AccommodationDetails MapFrom(AccommodationData data)
         {
-            return Mapper.Map<AccommodationDetails>(viewModel);
+            return Mapper.Map<AccommodationDetails>(data);
         }
     }
 }

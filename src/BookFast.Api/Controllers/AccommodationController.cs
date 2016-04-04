@@ -9,12 +9,12 @@ using Microsoft.AspNet.Mvc;
 namespace BookFast.Api.Controllers
 {
     [Authorize(Policy = "FacilityProviderOnly")]
-    public class AccommodationsController : Controller
+    public class AccommodationController : Controller
     {
         private readonly IAccommodationService service;
         private readonly IAccommodationMapper mapper;
 
-        public AccommodationsController(IAccommodationService service, IAccommodationMapper mapper)
+        public AccommodationController(IAccommodationService service, IAccommodationMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;

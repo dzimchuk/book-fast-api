@@ -21,7 +21,7 @@ namespace BookFast.Business.Services
             this.accommodationService = accommodationService;
         }
 
-        public async Task BookAsync(Guid accommodationId, BookingDetails details)
+        public async Task<Booking> BookAsync(Guid accommodationId, BookingDetails details)
         {
             await accommodationService.CheckAccommodationAsync(accommodationId);
 
@@ -34,6 +34,7 @@ namespace BookFast.Business.Services
                           };
 
             await dataSource.CreateAsync(booking);
+            return booking;
         }
 
         public Task<List<Booking>> ListPendingAsync()

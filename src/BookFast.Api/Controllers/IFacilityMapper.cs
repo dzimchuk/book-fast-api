@@ -9,6 +9,6 @@ namespace BookFast.Api.Controllers
     {
         FacilityRepresentation MapFrom(Facility facility);
         IEnumerable<FacilityRepresentation> MapFrom(IEnumerable<Facility> facilities);
-        FacilityDetails MapFrom(FacilityData viewModel);
+        FacilityDetails MapFrom(FacilityData data);
     }
 }

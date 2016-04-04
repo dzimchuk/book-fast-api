@@ -1,4 +1,6 @@
-﻿using BookFast.Api.Infrastructure;
+﻿using BookFast.Api.Controllers;
+using BookFast.Api.Infrastructure;
+using BookFast.Api.Mappers;
 using BookFast.Business;
 using BookFast.Contracts.Framework;
 using BookFast.Contracts.Security;
@@ -15,6 +17,7 @@ namespace BookFast.Api.Composition
 
             RegisterAuthorizationPolicies(services);
             RegisterApplicationServices(services);
+            RegisterMappers(services);
 
             services.AddInstance(configuration);
         }
@@ -30,6 +33,13 @@ namespace BookFast.Api.Composition
             var provider = new SecurityContextProvider();
             services.AddInstance<ISecurityContextAcceptor>(provider);
             services.AddInstance<ISecurityContext>(provider);
+        }
+
+        private static void RegisterMappers(IServiceCollection services)
+        {
+            services.AddScoped<IFacilityMapper, FacilityMapper>();
+            services.AddScoped<IAccommodationMapper, AccommodationMapper>();
+            services.AddScoped<IBookingMapper, BookingMapper>();
         }
     }
 }

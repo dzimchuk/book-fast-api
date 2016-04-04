@@ -10,27 +10,26 @@ using Microsoft.AspNet.Mvc;
 
 namespace BookFast.Api.Controllers
 {
-    [Route("api/[controller]")]
     [Authorize(Policy = "FacilityProviderOnly")]
-    public class FacilitiesController : Controller
+    public class FacilityController : Controller
     {
         private readonly IFacilityService service;
         private readonly IFacilityMapper mapper;
 
-        public FacilitiesController(IFacilityService service, IFacilityMapper mapper)
+        public FacilityController(IFacilityService service, IFacilityMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("api/facilities")]
         public async Task<IEnumerable<FacilityRepresentation>> List()
         {
             var facilities = await service.ListAsync();
             return mapper.MapFrom(facilities);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("/api/facilities/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> Find(Guid id)
         {
@@ -45,7 +44,7 @@ namespace BookFast.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("api/facilities")]
         public async Task<IActionResult> Create([FromBody]FacilityData facilityData)
         {
             if (ModelState.IsValid)
@@ -57,7 +56,7 @@ namespace BookFast.Api.Controllers
             return HttpBadRequest();
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("api/facilities/{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody]FacilityData facilityData)
         {
             try
@@ -76,7 +75,7 @@ namespace BookFast.Api.Controllers
             }
         }
         
-        [HttpDelete("{id}")]
+        [HttpDelete("api/facilities/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
