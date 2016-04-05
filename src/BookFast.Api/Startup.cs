@@ -53,10 +53,9 @@ namespace BookFast.Api
             loggerFactory.AddDebug();
 
             app.UseIISPlatformHandler();
-
-            
-
             app.UseMvc();
+
+            app.UseSwaggerGen();
         }
         
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);

@@ -7,6 +7,7 @@ using BookFast.Contracts;
 using BookFast.Contracts.Exceptions;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
@@ -23,6 +24,8 @@ namespace BookFast.Api.Controllers
         }
 
         [HttpGet("api/facilities")]
+        [SwaggerOperation("list-facilities")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<FacilityRepresentation>))]
         public async Task<IEnumerable<FacilityRepresentation>> List()
         {
             var facilities = await service.ListAsync();
@@ -30,13 +33,15 @@ namespace BookFast.Api.Controllers
         }
         
         [HttpGet("/api/facilities/{id}")]
+        [SwaggerOperation("find-facility")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(FacilityRepresentation))]
         [AllowAnonymous]
         public async Task<IActionResult> Find(Guid id)
         {
             try
             {
                 var facility = await service.FindAsync(id);
-                return new ObjectResult(mapper.MapFrom(facility));
+                return Ok(mapper.MapFrom(facility));
             }
             catch (FacilityNotFoundException)
             {
@@ -45,6 +50,9 @@ namespace BookFast.Api.Controllers
         }
 
         [HttpPost("api/facilities")]
+        [SwaggerOperation("create-facility")]
+        [SwaggerResponseRemoveDefaults]
+        [SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(FacilityRepresentation))]
         public async Task<IActionResult> Create([FromBody]FacilityData facilityData)
         {
             if (ModelState.IsValid)
@@ -57,6 +65,8 @@ namespace BookFast.Api.Controllers
         }
         
         [HttpPut("api/facilities/{id}")]
+        [SwaggerOperation("update-facility")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(FacilityRepresentation))]
         public async Task<IActionResult> Update(Guid id, [FromBody]FacilityData facilityData)
         {
             try
@@ -64,7 +74,7 @@ namespace BookFast.Api.Controllers
                 if (ModelState.IsValid)
                 {
                     var facility = await service.UpdateAsync(id, mapper.MapFrom(facilityData));
-                    return new ObjectResult(mapper.MapFrom(facility));
+                    return Ok(mapper.MapFrom(facility));
                 }
 
                 return HttpBadRequest();
@@ -76,6 +86,9 @@ namespace BookFast.Api.Controllers
         }
         
         [HttpDelete("api/facilities/{id}")]
+        [SwaggerOperation("delete-facility")]
+        [SwaggerResponseRemoveDefaults]
+        [SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

@@ -7,6 +7,7 @@ using BookFast.Contracts;
 using BookFast.Contracts.Exceptions;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
@@ -23,6 +24,8 @@ namespace BookFast.Api.Controllers
         }
 
         [HttpGet("api/bookings")]
+        [SwaggerOperation("list-bookings")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<BookingRepresentation>))]
         public async Task<IEnumerable<BookingRepresentation>> List()
         {
             var bookings = await service.ListPendingAsync();
@@ -30,12 +33,14 @@ namespace BookFast.Api.Controllers
         }
 
         [HttpGet("api/bookings/{id}")]
+        [SwaggerOperation("find-booking")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(BookingRepresentation))]
         public async Task<IActionResult> Find(Guid id)
         {
             try
             {
                 var booking = await service.FindAsync(id);
-                return new ObjectResult(mapper.MapFrom(booking));
+                return Ok(mapper.MapFrom(booking));
             }
             catch (BookingNotFoundException)
             {
@@ -44,6 +49,9 @@ namespace BookFast.Api.Controllers
         }
 
         [HttpPost("api/accommodations/{accommodationId}/bookings")]
+        [SwaggerOperation("create-booking")]
+        [SwaggerResponseRemoveDefaults]
+        [SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(BookingRepresentation))]
         public async Task<IActionResult> Create([FromRoute]Guid accommodationId, [FromBody]BookingData bookingData)
         {
             try
@@ -63,6 +71,9 @@ namespace BookFast.Api.Controllers
         }
 
         [HttpDelete("api/bookings/{id}")]
+        [SwaggerOperation("delete-booking")]
+        [SwaggerResponseRemoveDefaults]
+        [SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

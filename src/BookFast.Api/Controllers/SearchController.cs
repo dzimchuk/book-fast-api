@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BookFast.Contracts;
+using BookFast.Contracts.Search;
 using Microsoft.AspNet.Mvc;
+using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
@@ -15,6 +18,8 @@ namespace BookFast.Api.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation("search")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<SearchResult>))]
         public async Task<IActionResult> Search([FromQuery]string searchText, [FromQuery]int page = 1)
         {
             if (string.IsNullOrWhiteSpace(searchText))
@@ -24,7 +29,7 @@ namespace BookFast.Api.Controllers
                 return HttpBadRequest();
 
             var searchResults = await service.SearchAsync(searchText, page);
-            return new ObjectResult(searchResults);
+            return Ok(searchResults);
         }
     }
 }
