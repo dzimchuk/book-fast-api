@@ -23,6 +23,10 @@ namespace BookFast.Api.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// List bookings by customer
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("api/bookings")]
         [SwaggerOperation("list-bookings")]
         [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<BookingRepresentation>))]
@@ -32,9 +36,15 @@ namespace BookFast.Api.Controllers
             return mapper.MapFrom(bookings);
         }
 
+        /// <summary>
+        /// Find booking by ID
+        /// </summary>
+        /// <param name="id">Booking ID</param>
+        /// <returns></returns>
         [HttpGet("api/bookings/{id}")]
         [SwaggerOperation("find-booking")]
         [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(BookingRepresentation))]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Booking not found")]
         public async Task<IActionResult> Find(Guid id)
         {
             try
@@ -48,10 +58,17 @@ namespace BookFast.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Book an accommodation
+        /// </summary>
+        /// <param name="accommodationId">Accommodation ID</param>
+        /// <param name="bookingData">Booking details</param>
+        /// <returns></returns>
         [HttpPost("api/accommodations/{accommodationId}/bookings")]
         [SwaggerOperation("create-booking")]
         [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(BookingRepresentation))]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
         public async Task<IActionResult> Create([FromRoute]Guid accommodationId, [FromBody]BookingData bookingData)
         {
             try
@@ -70,10 +87,17 @@ namespace BookFast.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Cancel booking
+        /// </summary>
+        /// <param name="id">Booking ID</param>
+        /// <returns></returns>
         [HttpDelete("api/bookings/{id}")]
         [SwaggerOperation("delete-booking")]
         [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
+        [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Attempt to cancel a booking of another user")]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Booking not found")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

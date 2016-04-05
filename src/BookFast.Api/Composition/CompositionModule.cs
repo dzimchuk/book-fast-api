@@ -1,6 +1,7 @@
 ﻿using BookFast.Api.Controllers;
 using BookFast.Api.Infrastructure;
 using BookFast.Api.Mappers;
+using BookFast.Api.Swagger;
 using BookFast.Business;
 using BookFast.Contracts.Framework;
 using BookFast.Contracts.Security;
@@ -18,8 +19,8 @@ namespace BookFast.Api.Composition
             RegisterAuthorizationPolicies(services);
             RegisterApplicationServices(services);
             RegisterMappers(services);
-            RegisterSwashbuckle(services);
 
+            services.AddSwashbuckle();
             services.AddInstance(configuration);
         }
 
@@ -41,25 +42,6 @@ namespace BookFast.Api.Composition
             services.AddScoped<IFacilityMapper, FacilityMapper>();
             services.AddScoped<IAccommodationMapper, AccommodationMapper>();
             services.AddScoped<IBookingMapper, BookingMapper>();
-        }
-
-        private static void RegisterSwashbuckle(IServiceCollection services)
-        {
-            services.AddSwaggerGen();
-            services.ConfigureSwaggerSchema(options =>
-                                            {
-                                                options.DescribeAllEnumsAsStrings = true;
-                                            });
-
-            services.ConfigureSwaggerDocument(options =>
-                                              {
-                                                  options.SingleApiVersion(new Swashbuckle.SwaggerGen.Info
-                                                                           {
-                                                                               Title = "Book Fast API",
-                                                                               Version = "v1"
-                                                                           });
-                                                  options.OperationFilter<DefaultContentTypeOperationFilter>();
-                                              });
         }
     }
 }

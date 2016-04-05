@@ -1,6 +1,6 @@
 ﻿using Swashbuckle.SwaggerGen;
 
-namespace BookFast.Api.Infrastructure
+namespace BookFast.Api.Swagger
 {
     internal class DefaultContentTypeOperationFilter : IOperationFilter
     {

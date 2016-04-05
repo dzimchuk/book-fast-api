@@ -17,9 +17,16 @@ namespace BookFast.Api.Controllers
             this.service = service;
         }
 
+        /// <summary>
+        /// Search for accommodations
+        /// </summary>
+        /// <param name="searchText">Search terms</param>
+        /// <param name="page">Page number</param>
+        /// <returns></returns>
         [HttpGet]
         [SwaggerOperation("search")]
         [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<SearchResult>))]
+        [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
         public async Task<IActionResult> Search([FromQuery]string searchText, [FromQuery]int page = 1)
         {
             if (string.IsNullOrWhiteSpace(searchText))
