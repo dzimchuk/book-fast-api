@@ -37,16 +37,17 @@ namespace BookFast.Api.Swagger
         {
             string xmlDoc = null;
             var serviceProvider = services.BuildServiceProvider();
-            var appEnv = serviceProvider.GetService<IApplicationEnvironment>();
             var hostEnv = serviceProvider.GetService<IHostingEnvironment>();
 
             if (hostEnv.IsDevelopment())
             {
+                var appEnv = serviceProvider.GetService<IApplicationEnvironment>();
+
                 var solutionBasePath = GetSolutionBasePath(appEnv.ApplicationBasePath);
                 var buildConfiguration = appEnv.Configuration;
                 var frameworkIdentifier = appEnv.RuntimeFramework.Identifier;
                 var frameworkVersion = appEnv.RuntimeFramework.Version.ToString().Replace(".", string.Empty);
-                xmlDoc = $"{solutionBasePath}\\artifacts\\bin\\BookFast.Api\\{buildConfiguration}\\{frameworkIdentifier}{frameworkVersion}\\BookFast.Api.xml";
+                xmlDoc = $@"{solutionBasePath}\artifacts\bin\BookFast.Api\{buildConfiguration}\{frameworkIdentifier}{frameworkVersion}\BookFast.Api.xml";
             }
 
             return xmlDoc;
