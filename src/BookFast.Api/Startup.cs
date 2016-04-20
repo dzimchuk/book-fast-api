@@ -58,6 +58,8 @@ namespace BookFast.Api
 
             app.UseJwtBearerAuthentication(options =>
                                            {
+                                               options.AutomaticAuthenticate = true;
+                                               options.AutomaticChallenge = true;
                                                options.Authority = authOptions.Value.Authority;
                                                options.Audience = authOptions.Value.Audience;
                                            });

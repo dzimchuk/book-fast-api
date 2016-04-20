@@ -50,6 +50,11 @@ namespace BookFast.Api.Swagger
                 xmlDoc = $@"{solutionBasePath}\artifacts\bin\BookFast.Api\{buildConfiguration}\{frameworkIdentifier}{frameworkVersion}\BookFast.Api.xml";
             }
 
+            if (!File.Exists(xmlDoc))
+            {
+                xmlDoc = null;
+            }
+
             return xmlDoc;
         }
 
