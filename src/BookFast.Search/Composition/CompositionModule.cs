@@ -6,6 +6,7 @@ using BookFast.Search.Mappers;
 using Microsoft.Azure.Search;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.OptionsModel;
 
 namespace BookFast.Search.Composition
 {
@@ -13,18 +14,20 @@ namespace BookFast.Search.Composition
     {
         public void AddServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped(provider => CreateSearchIndexClient(provider, "search:adminKey"));
+            services.Configure<SearchOptions>(configuration.GetSection("Search"));
+
+            services.AddScoped(provider => CreateSearchIndexClient(provider, true));
             services.AddScoped<ISearchIndexer, SearchIndexer>();
 
             services.AddScoped<ISearchResultMapper, SearchResultMapper>();
-            services.AddScoped<ISearchDataSource>(provider => new SearchAdapter(CreateSearchIndexClient(provider, "search:queryKey"), provider.GetService<ISearchResultMapper>()));
+            services.AddScoped<ISearchDataSource>(provider => new SearchAdapter(CreateSearchIndexClient(provider, false), provider.GetService<ISearchResultMapper>()));
         }
 
-        private static ISearchIndexClient CreateSearchIndexClient(IServiceProvider provider, string apiKey)
+        private static ISearchIndexClient CreateSearchIndexClient(IServiceProvider provider, bool useAdminKey)
         { 
-            var configuration = provider.GetService<IConfiguration>(); 
-            return new SearchIndexClient(configuration["search:serviceName"], 
-                configuration["search:indexName"], new SearchCredentials(configuration[apiKey])); 
+            var options = provider.GetService<IOptions<SearchOptions>>(); 
+            return new SearchIndexClient(options.Value.ServiceName, 
+                options.Value.IndexName, new SearchCredentials(useAdminKey? options.Value.AdminKey : options.Value.QueryKey)); 
         }
     }
 }

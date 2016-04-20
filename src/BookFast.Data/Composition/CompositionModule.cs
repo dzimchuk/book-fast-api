@@ -13,8 +13,12 @@ namespace BookFast.Data.Composition
     {
         public void AddServices(IServiceCollection services, IConfiguration configuration)
         {
-            var efBuilder = new EntityFrameworkServicesBuilder(services);
-            efBuilder.AddDbContext<BookFastContext>(options => options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"]));
+            //var efBuilder = new EntityFrameworkServicesBuilder(services);
+            //efBuilder.AddDbContext<BookFastContext>(options => options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"]));
+
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<BookFastContext>(options => options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddScoped<IFacilityDataSource, FacilityDataSource>();
             services.AddScoped<IAccommodationDataSource, AccommodationDataSource>();

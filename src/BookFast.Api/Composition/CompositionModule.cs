@@ -23,7 +23,6 @@ namespace BookFast.Api.Composition
             RegisterMappers(services);
 
             services.AddSwashbuckle();
-            services.AddInstance(configuration);
         }
 
         private static void RegisterAuthorizationPolicies(IServiceCollection services)

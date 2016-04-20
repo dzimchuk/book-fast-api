@@ -64,6 +64,7 @@ namespace BookFast.Api
                                                options.Audience = authOptions.Value.Audience;
                                            });
 
+            app.UseSecurityContext();
             app.UseMvc();
 
             app.UseSwaggerGen();
