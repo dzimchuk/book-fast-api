@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using BookFast.Api.Infrastructure;
 using BookFast.Contracts.Framework;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.OptionsModel;
 
 namespace BookFast.Api
 {
@@ -47,12 +49,19 @@ namespace BookFast.Api
             }
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<AuthenticationOptions> authOptions)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseIISPlatformHandler();
+
+            app.UseJwtBearerAuthentication(options =>
+                                           {
+                                               options.Authority = authOptions.Value.Authority;
+                                               options.Audience = authOptions.Value.Audience;
+                                           });
+
             app.UseMvc();
 
             app.UseSwaggerGen();
