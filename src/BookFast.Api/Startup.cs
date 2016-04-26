@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BookFast.Api.Infrastructure;
+using BookFast.Api.Infrastructure.JwtBearer;
 using BookFast.Contracts.Framework;
+using Microsoft.AspNet.Authentication.JwtBearer;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.OptionsModel;
+using AuthenticationOptions = BookFast.Api.Infrastructure.AuthenticationOptions;
 
 namespace BookFast.Api
 {
@@ -56,13 +60,23 @@ namespace BookFast.Api
 
             app.UseIISPlatformHandler();
 
-            app.UseJwtBearerAuthentication(options =>
-                                           {
-                                               options.AutomaticAuthenticate = true;
-                                               options.AutomaticChallenge = true;
-                                               options.Authority = authOptions.Value.Authority;
-                                               options.Audience = authOptions.Value.Audience;
-                                           });
+            var jwtBearerOptions = new JwtBearerOptions
+                                   {
+                                       AutomaticAuthenticate = true,
+                                       AutomaticChallenge = true,
+                                       Authority = authOptions.Value.Authority,
+                                       Audience = authOptions.Value.Audience,
+
+                                       Events = new JwtBearerEvents
+                                                {
+                                                    OnAuthenticationFailed = ctx =>
+                                                                             {
+                                                                                 ctx.SkipToNextMiddleware();
+                                                                                 return Task.FromResult(0);
+                                                                             }
+                                                }
+                                   };
+            app.UseMiddleware<CustomJwtBearerMiddleware>(jwtBearerOptions);
 
             app.UseSecurityContext();
             app.UseMvc();
