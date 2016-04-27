@@ -11,7 +11,7 @@ using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
-    [Authorize(Policy = "FacilityProviderOnly")]
+    [Authorize(Policy = "Facility.Write")]
     public class AccommodationController : Controller
     {
         private readonly IAccommodationService service;

@@ -28,7 +28,14 @@ namespace BookFast.Api.Composition
         private static void RegisterAuthorizationPolicies(IServiceCollection services)
         {
             services.AddAuthorization(
-                options => options.AddPolicy("FacilityProviderOnly", config => config.RequireClaim(BookFastClaimTypes.InteractorRole, InteractorRole.FacilityProvider.ToString())));
+                options =>
+                {
+                    options.AddPolicy("Facility.Write", config =>
+                                                        {
+                                                            config.RequireRole(InteractorRole.FacilityProvider.ToString());
+                                                            config.RequireRole(InteractorRole.Process.ToString());
+                                                        });
+                });
         }
 
         private static void RegisterApplicationServices(IServiceCollection services)
