@@ -32,8 +32,7 @@ namespace BookFast.Api.Composition
                 {
                     options.AddPolicy("Facility.Write", config =>
                                                         {
-                                                            config.RequireRole(InteractorRole.FacilityProvider.ToString());
-                                                            config.RequireRole(InteractorRole.Process.ToString());
+                                                            config.RequireRole(InteractorRole.FacilityProvider.ToString(), InteractorRole.ImporterProcess.ToString());
                                                         });
                 });
         }

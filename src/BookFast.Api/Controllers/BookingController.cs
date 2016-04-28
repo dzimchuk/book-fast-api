@@ -77,7 +77,7 @@ namespace BookFast.Api.Controllers
                 if (ModelState.IsValid)
                 {
                     var booking = await service.BookAsync(accommodationId, mapper.MapFrom(bookingData));
-                    return CreatedAtAction("Find", mapper.MapFrom(booking));
+                    return CreatedAtAction("Find", new { id = booking.Id }, mapper.MapFrom(booking));
                 }
 
                 return HttpBadRequest();

@@ -74,7 +74,7 @@ namespace BookFast.Api.Controllers
             if (ModelState.IsValid)
             {
                 var facility = await service.CreateAsync(mapper.MapFrom(facilityData));
-                return CreatedAtAction("Find", mapper.MapFrom(facility));
+                return CreatedAtAction("Find", new { id = facility.Id }, mapper.MapFrom(facility));
             }
 
             return HttpBadRequest();

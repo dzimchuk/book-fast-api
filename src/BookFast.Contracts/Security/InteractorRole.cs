@@ -4,6 +4,6 @@
     {
         FacilityProvider,
         Customer,
-        Process
+        ImporterProcess
     }
 }
