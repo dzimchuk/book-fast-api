@@ -5,7 +5,7 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-  "userSecretsId": "BookFast-7a05f44e-ec5c-45ce-aa48-d7d43becad32",
+  "userSecretsId": "BookFastApi-7a05f44e-ec5c-45ce-aa48-d7d43becad32",
 
   "compilationOptions": {
     "emitEntryPoint": true
