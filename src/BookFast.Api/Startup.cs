@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BookFast.Api.Infrastructure;
-using BookFast.Api.Infrastructure.JwtBearer;
 using BookFast.Contracts.Framework;
-using Microsoft.AspNet.Authentication.JwtBearer;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.OptionsModel;
-using AuthenticationOptions = BookFast.Api.Infrastructure.AuthenticationOptions;
+using Microsoft.Extensions.Options;
 
 namespace BookFast.Api
 {
@@ -18,21 +16,21 @@ namespace BookFast.Api
     {
         public Startup(IHostingEnvironment env)
         {
-            // Set up configuration sources.
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json");
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
             {
                 builder.AddUserSecrets();
             }
 
-            builder.AddEnvironmentVariables();
-
             Configuration = builder.Build();
         }
 
-        private IConfigurationRoot Configuration { get; set; }
+        private IConfigurationRoot Configuration { get; }
         
         public void ConfigureServices(IServiceCollection services)
         {
@@ -40,50 +38,43 @@ namespace BookFast.Api
                           {
                               new Composition.CompositionModule(),
                               new Business.Composition.CompositionModule(),
-                              new Data.Composition.CompositionModule()
+                              new Data.Composition.CompositionModule(),
+                              new Search.Composition.CompositionModule()
                           };
-
-#if DNX451
-            modules.Add(new Search.Composition.CompositionModule());
-#endif
 
             foreach (var module in modules)
             {
                 module.AddServices(services, Configuration);
             }
         }
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<AuthenticationOptions> authOptions)
+        
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            IOptions<Infrastructure.AuthenticationOptions> authOptions)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseIISPlatformHandler();
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+                                           {
+                                               AutomaticAuthenticate = true,
+                                               AutomaticChallenge = true,
+                                               Authority = authOptions.Value.Authority,
+                                               Audience = authOptions.Value.Audience,
 
-            var jwtBearerOptions = new JwtBearerOptions
-                                   {
-                                       AutomaticAuthenticate = true,
-                                       AutomaticChallenge = true,
-                                       Authority = authOptions.Value.Authority,
-                                       Audience = authOptions.Value.Audience,
-
-                                       Events = new JwtBearerEvents
-                                                {
-                                                    OnAuthenticationFailed = ctx =>
-                                                                             {
-                                                                                 ctx.SkipToNextMiddleware();
-                                                                                 return Task.FromResult(0);
-                                                                             }
-                                                }
-                                   };
-            app.UseMiddleware<CustomJwtBearerMiddleware>(jwtBearerOptions);
+                                               Events = new JwtBearerEvents
+                                                        {
+                                                            OnAuthenticationFailed = ctx =>
+                                                                                     {
+                                                                                         ctx.SkipToNextMiddleware();
+                                                                                         return Task.FromResult(0);
+                                                                                     }
+                                                        }
+                                           });
 
             app.UseSecurityContext();
             app.UseMvc();
 
-            app.UseSwaggerGen();
+            //app.UseSwaggerGen();
         }
-        
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }

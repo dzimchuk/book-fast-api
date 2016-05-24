@@ -5,9 +5,9 @@ using BookFast.Api.Models;
 using BookFast.Api.Models.Representations;
 using BookFast.Contracts;
 using BookFast.Contracts.Exceptions;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
-using Swashbuckle.SwaggerGen.Annotations;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+//using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
@@ -28,8 +28,8 @@ namespace BookFast.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("api/bookings")]
-        [SwaggerOperation("list-bookings")]
-        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<BookingRepresentation>))]
+        //[SwaggerOperation("list-bookings")]
+        //[SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<BookingRepresentation>))]
         public async Task<IEnumerable<BookingRepresentation>> List()
         {
             var bookings = await service.ListPendingAsync();
@@ -42,9 +42,9 @@ namespace BookFast.Api.Controllers
         /// <param name="id">Booking ID</param>
         /// <returns></returns>
         [HttpGet("api/bookings/{id}")]
-        [SwaggerOperation("find-booking")]
-        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(BookingRepresentation))]
-        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Booking not found")]
+        //[SwaggerOperation("find-booking")]
+        //[SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(BookingRepresentation))]
+        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Booking not found")]
         public async Task<IActionResult> Find(Guid id)
         {
             try
@@ -54,7 +54,7 @@ namespace BookFast.Api.Controllers
             }
             catch (BookingNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -65,11 +65,11 @@ namespace BookFast.Api.Controllers
         /// <param name="bookingData">Booking details</param>
         /// <returns></returns>
         [HttpPost("api/accommodations/{accommodationId}/bookings")]
-        [SwaggerOperation("create-booking")]
-        [SwaggerResponseRemoveDefaults]
-        [SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(BookingRepresentation))]
-        [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
-        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
+        //[SwaggerOperation("create-booking")]
+        //[SwaggerResponseRemoveDefaults]
+        //[SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(BookingRepresentation))]
+        //[SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
+        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
         public async Task<IActionResult> Create([FromRoute]Guid accommodationId, [FromBody]BookingData bookingData)
         {
             try
@@ -80,11 +80,11 @@ namespace BookFast.Api.Controllers
                     return CreatedAtAction("Find", new { id = booking.Id }, mapper.MapFrom(booking));
                 }
 
-                return HttpBadRequest();
+                return BadRequest();
             }
             catch (AccommodationNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -94,11 +94,11 @@ namespace BookFast.Api.Controllers
         /// <param name="id">Booking ID</param>
         /// <returns></returns>
         [HttpDelete("api/bookings/{id}")]
-        [SwaggerOperation("delete-booking")]
-        [SwaggerResponseRemoveDefaults]
-        [SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
-        [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Attempt to cancel a booking of another user")]
-        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Booking not found")]
+        //[SwaggerOperation("delete-booking")]
+        //[SwaggerResponseRemoveDefaults]
+        //[SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
+        //[SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Attempt to cancel a booking of another user")]
+        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Booking not found")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
@@ -108,11 +108,11 @@ namespace BookFast.Api.Controllers
             }
             catch (BookingNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             catch (UserMismatchException)
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
         }
     }

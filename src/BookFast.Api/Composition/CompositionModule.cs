@@ -1,7 +1,7 @@
 ﻿using BookFast.Api.Controllers;
 using BookFast.Api.Infrastructure;
 using BookFast.Api.Mappers;
-using BookFast.Api.Swagger;
+//using BookFast.Api.Swagger;
 using BookFast.Business;
 using BookFast.Contracts.Framework;
 using BookFast.Contracts.Security;
@@ -22,7 +22,7 @@ namespace BookFast.Api.Composition
             RegisterApplicationServices(services);
             RegisterMappers(services);
 
-            services.AddSwashbuckle();
+            //services.AddSwashbuckle();
         }
 
         private static void RegisterAuthorizationPolicies(IServiceCollection services)
@@ -40,8 +40,8 @@ namespace BookFast.Api.Composition
         private static void RegisterApplicationServices(IServiceCollection services)
         {
             var provider = new SecurityContextProvider();
-            services.AddInstance<ISecurityContextAcceptor>(provider);
-            services.AddInstance<ISecurityContext>(provider);
+            services.AddSingleton<ISecurityContextAcceptor>(provider);
+            services.AddSingleton<ISecurityContext>(provider);
         }
 
         private static void RegisterMappers(IServiceCollection services)

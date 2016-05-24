@@ -6,7 +6,7 @@ using BookFast.Data.Models;
 using Booking = BookFast.Contracts.Models.Booking;
 using System.Linq;
 using BookFast.Contracts.Models;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookFast.Data.Queries
 {
