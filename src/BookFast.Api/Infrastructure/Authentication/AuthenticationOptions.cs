@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace BookFast.Api.Infrastructure
+namespace BookFast.Api.Infrastructure.Authentication
 {
     public class AuthenticationOptions : IOptions<AuthenticationOptions>
     {

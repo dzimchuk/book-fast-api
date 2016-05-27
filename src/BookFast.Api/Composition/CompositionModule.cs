@@ -1,5 +1,6 @@
 ﻿using BookFast.Api.Controllers;
 using BookFast.Api.Infrastructure;
+using BookFast.Api.Infrastructure.Authentication;
 using BookFast.Api.Mappers;
 //using BookFast.Api.Swagger;
 using BookFast.Business;
@@ -15,6 +16,7 @@ namespace BookFast.Api.Composition
         public void AddServices(IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication:AzureAd"));
+            services.Configure<B2CAuthenticationOptions>(configuration.GetSection("Authentication:AzureAd:B2C"));
 
             services.AddMvc();
 

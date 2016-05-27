@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using BookFast.Api.Infrastructure.Authentication;
 
 namespace BookFast.Api
 {
@@ -49,27 +50,48 @@ namespace BookFast.Api
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
-            IOptions<Infrastructure.AuthenticationOptions> authOptions)
+            IOptions<Infrastructure.Authentication.AuthenticationOptions> authOptions, IOptions<B2CAuthenticationOptions> b2cAuthOptions)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddDebug();        
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
-                                           {
-                                               AutomaticAuthenticate = true,
-                                               AutomaticChallenge = true,
-                                               Authority = authOptions.Value.Authority,
-                                               Audience = authOptions.Value.Audience,
+            {
+                AuthenticationScheme = Constants.CustomerAuthenticationScheme,
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
 
-                                               Events = new JwtBearerEvents
-                                                        {
-                                                            OnAuthenticationFailed = ctx =>
-                                                                                     {
-                                                                                         ctx.SkipToNextMiddleware();
-                                                                                         return Task.FromResult(0);
-                                                                                     }
-                                                        }
-                                           });
+                MetadataAddress = $"{b2cAuthOptions.Value.Authority}/.well-known/openid-configuration?p={b2cAuthOptions.Value.SignInPolicy}",
+                Audience = b2cAuthOptions.Value.Audience,
+
+                Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = ctx =>
+                    {
+                        ctx.SkipToNextMiddleware();
+                        return Task.FromResult(0);
+                    }
+                }
+            });
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AuthenticationScheme = Constants.OrganizationalAuthenticationScheme,
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = false,
+
+                Authority = authOptions.Value.Authority,
+                Audience = authOptions.Value.Audience,
+
+                Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = ctx =>
+                    {
+                        ctx.SkipToNextMiddleware();
+                        return Task.FromResult(0);
+                    }
+                }
+            });
 
             app.UseSecurityContext();
             app.UseMvc();
