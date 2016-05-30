@@ -5,13 +5,14 @@ using BookFast.Api.Models;
 using BookFast.Api.Models.Representations;
 using BookFast.Contracts;
 using BookFast.Contracts.Exceptions;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
     [Authorize]
+    [SwaggerResponseRemoveDefaults]
     public class BookingController : Controller
     {
         private readonly IBookingService service;
@@ -54,7 +55,7 @@ namespace BookFast.Api.Controllers
             }
             catch (BookingNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -66,7 +67,6 @@ namespace BookFast.Api.Controllers
         /// <returns></returns>
         [HttpPost("api/accommodations/{accommodationId}/bookings")]
         [SwaggerOperation("create-booking")]
-        [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(BookingRepresentation))]
         [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
         [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
@@ -80,11 +80,11 @@ namespace BookFast.Api.Controllers
                     return CreatedAtAction("Find", new { id = booking.Id }, mapper.MapFrom(booking));
                 }
 
-                return HttpBadRequest();
+                return BadRequest();
             }
             catch (AccommodationNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -95,7 +95,6 @@ namespace BookFast.Api.Controllers
         /// <returns></returns>
         [HttpDelete("api/bookings/{id}")]
         [SwaggerOperation("delete-booking")]
-        [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
         [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Attempt to cancel a booking of another user")]
         [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Booking not found")]
@@ -108,11 +107,11 @@ namespace BookFast.Api.Controllers
             }
             catch (BookingNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             catch (UserMismatchException)
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
         }
     }

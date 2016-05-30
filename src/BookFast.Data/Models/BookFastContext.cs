@@ -1,9 +1,17 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace BookFast.Data.Models
 {
     internal class BookFastContext : DbContext
     {
+        public BookFastContext(DbContextOptions options) : base(options)
+        {
+        }
+
+        public BookFastContext()
+        {
+        }
+
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Accommodation> Accommodations { get; set; }
         public DbSet<Booking> Bookings { get; set; }
@@ -23,7 +31,7 @@ namespace BookFast.Data.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\ProjectsV12;Initial Catalog=BookFast;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\ProjectsV13;Initial Catalog=BookFast;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
     }

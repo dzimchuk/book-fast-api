@@ -5,13 +5,14 @@ using BookFast.Api.Models;
 using BookFast.Api.Models.Representations;
 using BookFast.Contracts;
 using BookFast.Contracts.Exceptions;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
     [Authorize(Policy = "Facility.Write")]
+    [SwaggerResponseRemoveDefaults]
     public class AccommodationController : Controller
     {
         private readonly IAccommodationService service;
@@ -41,7 +42,7 @@ namespace BookFast.Api.Controllers
             }
             catch (FacilityNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -64,7 +65,7 @@ namespace BookFast.Api.Controllers
             }
             catch (AccommodationNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -76,7 +77,6 @@ namespace BookFast.Api.Controllers
         /// <returns></returns>
         [HttpPost("api/facilities/{facilityId}/accommodations")]
         [SwaggerOperation("create-accommodation")]
-        [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(AccommodationRepresentation))]
         [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
         [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found")]
@@ -90,11 +90,11 @@ namespace BookFast.Api.Controllers
                     return CreatedAtAction("Find", new { id = accommodation.Id }, mapper.MapFrom(accommodation));
                 }
 
-                return HttpBadRequest();
+                return BadRequest();
             }
             catch (FacilityNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -119,15 +119,15 @@ namespace BookFast.Api.Controllers
                     return Ok(mapper.MapFrom(accommodation));
                 }
 
-                return HttpBadRequest();
+                return BadRequest();
             }
             catch (FacilityNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             catch (AccommodationNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
 
@@ -150,7 +150,7 @@ namespace BookFast.Api.Controllers
             }
             catch (AccommodationNotFoundException)
             {
-                return HttpNotFound();
+                return NotFound();
             }
         }
     }

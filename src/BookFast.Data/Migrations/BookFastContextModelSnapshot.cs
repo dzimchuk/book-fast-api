@@ -1,8 +1,8 @@
-using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using BookFast.Data.Models;
 
 namespace BookFast.Data.Migrations
@@ -13,7 +13,7 @@ namespace BookFast.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
+                .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("BookFast.Data.Models.Accommodation", b =>
@@ -30,6 +30,10 @@ namespace BookFast.Data.Migrations
                     b.Property<int>("RoomCount");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
+
+                    b.ToTable("Accommodations");
                 });
 
             modelBuilder.Entity("BookFast.Data.Models.Booking", b =>
@@ -50,6 +54,10 @@ namespace BookFast.Data.Migrations
                     b.Property<string>("User");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccommodationId");
+
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("BookFast.Data.Models.Facility", b =>
@@ -72,20 +80,24 @@ namespace BookFast.Data.Migrations
                     b.Property<string>("StreetAddress");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Facilities");
                 });
 
             modelBuilder.Entity("BookFast.Data.Models.Accommodation", b =>
                 {
                     b.HasOne("BookFast.Data.Models.Facility")
                         .WithMany()
-                        .HasForeignKey("FacilityId");
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BookFast.Data.Models.Booking", b =>
                 {
                     b.HasOne("BookFast.Data.Models.Accommodation")
                         .WithMany()
-                        .HasForeignKey("AccommodationId");
+                        .HasForeignKey("AccommodationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

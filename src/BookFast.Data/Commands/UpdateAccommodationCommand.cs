@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using BookFast.Contracts.Framework;
 using BookFast.Data.Models;
-using Microsoft.Data.Entity;
 using Accommodation = BookFast.Contracts.Models.Accommodation;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookFast.Data.Commands
 {

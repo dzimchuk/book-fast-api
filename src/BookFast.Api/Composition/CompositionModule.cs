@@ -40,8 +40,8 @@ namespace BookFast.Api.Composition
         private static void RegisterApplicationServices(IServiceCollection services)
         {
             var provider = new SecurityContextProvider();
-            services.AddInstance<ISecurityContextAcceptor>(provider);
-            services.AddInstance<ISecurityContext>(provider);
+            services.AddSingleton<ISecurityContextAcceptor>(provider);
+            services.AddSingleton<ISecurityContext>(provider);
         }
 
         private static void RegisterMappers(IServiceCollection services)

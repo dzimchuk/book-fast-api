@@ -1,24 +1,39 @@
 {
   "version": "1.0.0-*",
-  "description": "BookFast.Data Class Library",
-  "authors": [ "Andrei Dzimchuk" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
-  
-  "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
-  },
 
   "dependencies": {
     "BookFast.Business": "1.0.0-*",
-    "EntityFramework.Commands": "7.0.0-rc1-final",
-    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-rc2-final",
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-preview1-final",
+      "type": "build"
+    },
     "AutoMapper": "4.2.1"
   },
 
-  "commands": {
-    "ef": "EntityFramework.Commands"
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-preview1-final",
+      "imports": [
+        "portable-net45+win8+dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net45+win8" ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-rc2-3002702",
+          "type": "platform"
+        }
+      }
+    }
+  },
+
+  "buildOptions": {
+    "emitEntryPoint": true
   }
 }

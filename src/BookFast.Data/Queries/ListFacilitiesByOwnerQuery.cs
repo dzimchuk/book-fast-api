@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using BookFast.Contracts.Framework;
 using BookFast.Data.Models;
-using Microsoft.Data.Entity;
 using Facility = BookFast.Contracts.Models.Facility;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookFast.Data.Queries
 {
