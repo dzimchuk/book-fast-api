@@ -96,7 +96,7 @@ namespace BookFast.Api
             app.UseSecurityContext();
             app.UseMvc();
 
-            //app.UseSwaggerGen();
+            app.UseSwaggerGen();
         }
     }
 }
