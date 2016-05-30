@@ -7,11 +7,12 @@ using BookFast.Contracts;
 using BookFast.Contracts.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-//using Swashbuckle.SwaggerGen.Annotations;
+using Swashbuckle.SwaggerGen.Annotations;
 
 namespace BookFast.Api.Controllers
 {
     [Authorize(Policy = "Facility.Write")]
+    [SwaggerResponseRemoveDefaults]
     public class AccommodationController : Controller
     {
         private readonly IAccommodationService service;
@@ -29,9 +30,9 @@ namespace BookFast.Api.Controllers
         /// <param name="facilityId">Facility ID</param>
         /// <returns></returns>
         [HttpGet("api/facilities/{facilityId}/accommodations")]
-        //[SwaggerOperation("list-accommodations")]
-        //[SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<AccommodationRepresentation>))]
-        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found")]
+        [SwaggerOperation("list-accommodations")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<AccommodationRepresentation>))]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found")]
         public async Task<IActionResult> List(Guid facilityId)
         {
             try
@@ -51,9 +52,9 @@ namespace BookFast.Api.Controllers
         /// <param name="id">Accommodation ID</param>
         /// <returns></returns>
         [HttpGet("api/accommodations/{id}")]
-        //[SwaggerOperation("find-accommodation")]
-        //[SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(AccommodationRepresentation))]
-        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
+        [SwaggerOperation("find-accommodation")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(AccommodationRepresentation))]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
         [AllowAnonymous]
         public async Task<IActionResult> Find(Guid id)
         {
@@ -75,11 +76,10 @@ namespace BookFast.Api.Controllers
         /// <param name="accommodationData">Accommodation details</param>
         /// <returns></returns>
         [HttpPost("api/facilities/{facilityId}/accommodations")]
-        //[SwaggerOperation("create-accommodation")]
-        //[SwaggerResponseRemoveDefaults]
-        //[SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(AccommodationRepresentation))]
-        //[SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
-        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found")]
+        [SwaggerOperation("create-accommodation")]
+        [SwaggerResponse(System.Net.HttpStatusCode.Created, Type = typeof(AccommodationRepresentation))]
+        [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found")]
         public async Task<IActionResult> Create([FromRoute]Guid facilityId, [FromBody]AccommodationData accommodationData)
         {
             try
@@ -105,10 +105,10 @@ namespace BookFast.Api.Controllers
         /// <param name="accommodationData">Accommodation details</param>
         /// <returns></returns>
         [HttpPut("api/accommodations/{id}")]
-        //[SwaggerOperation("update-accommodation")]
-        //[SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(AccommodationRepresentation))]
-        //[SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
-        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found, Accommodation not found")]
+        [SwaggerOperation("update-accommodation")]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(AccommodationRepresentation))]
+        [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found, Accommodation not found")]
         public async Task<IActionResult> Update(Guid id, [FromBody]AccommodationData accommodationData)
         {
             try
@@ -137,10 +137,10 @@ namespace BookFast.Api.Controllers
         /// <param name="id">Accommodation ID</param>
         /// <returns></returns>
         [HttpDelete("api/accommodations/{id}")]
-        //[SwaggerOperation("delete-accommodation")]
-        //[SwaggerResponseRemoveDefaults]
-        //[SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
-        //[SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
+        [SwaggerOperation("delete-accommodation")]
+        [SwaggerResponseRemoveDefaults]
+        [SwaggerResponse(System.Net.HttpStatusCode.NoContent)]
+        [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
