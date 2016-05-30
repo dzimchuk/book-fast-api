@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using BookFast.Business;
 
 namespace BookFast.Api.Infrastructure
 {
@@ -12,11 +13,13 @@ namespace BookFast.Api.Infrastructure
             this.next = next;
         }
 
-        public async Task Invoke(HttpContext context, ISecurityContextAcceptor acceptor)
+        public Task Invoke(HttpContext context, ISecurityContext securityContext)
         {
-            acceptor.Principal = context.User;
-            await next(context);
-            acceptor.Principal = null;
+            var acceptor = securityContext as ISecurityContextAcceptor;
+            if (acceptor != null)
+                acceptor.Principal = context.User;
+
+            return next(context);
         }
     }
 }

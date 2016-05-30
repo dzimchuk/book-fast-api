@@ -16,7 +16,13 @@ Use environment variables, user-secrets or appsettings.json to configure the pro
 	"AzureAd": {
 		"Audience": "<BookFast API AppId in Azure AD>",
 		"Instance": "<Your Azure AD instance, e.g. https://login.microsoftonline.com/>",
-		"TenantId": "<Your Azure AD tenant ID>"
+		"TenantId": "<Your Azure AD tenant ID>",
+		"B2C": {
+        	"Instance": "",
+        	"TenantId": "",
+        	"Audience": "",
+        	"SignInPolicy": ""
+      	}
 	}
 },
 "Search": {

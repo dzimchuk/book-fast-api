@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using BookFast.Api.Infrastructure.Authentication;
+using System.Security.Claims;
 
 namespace BookFast.Api
 {
@@ -66,6 +67,16 @@ namespace BookFast.Api
 
                 Events = new JwtBearerEvents
                 {
+                    OnTokenValidated = ctx =>
+                    {
+                        var nameClaim = ctx.Ticket.Principal.FindFirst("name");
+                        if (nameClaim != null)
+                        {
+                            var claimsIdentity = (ClaimsIdentity)ctx.Ticket.Principal.Identity;
+                            claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, nameClaim.Value)); 
+                        }
+                        return Task.FromResult(0);
+                    },
                     OnAuthenticationFailed = ctx =>
                     {
                         ctx.SkipToNextMiddleware();
