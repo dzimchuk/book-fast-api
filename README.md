@@ -25,12 +25,17 @@ Use environment variables, user-secrets or appsettings.json to configure the pro
       	}
 	}
 },
-"Search": {
-	"QueryKey": "<Your Azure Search service's query key>",
-	"AdminKey": "<Your Azure Search service's admin key>",
-	"ServiceName": "<Your Azure Search service name>",
-	"IndexName": "<Your Azure Search index name>"
-}
+"Azure": {
+    "Storage": {
+      "ConnectionString": ""
+    },
+    "Search": {
+      "QueryKey": "<Your Azure Search service's query key>",
+	  "AdminKey": "<Your Azure Search service's admin key>",
+      "ServiceName": "<Your Azure Search service name>",
+	  "IndexName": "<Your Azure Search index name>"
+    }
+  }
 ```
 
 ## Database setup

@@ -41,7 +41,9 @@ namespace BookFast.Api
                               new Composition.CompositionModule(),
                               new Business.Composition.CompositionModule(),
                               new Data.Composition.CompositionModule(),
-                              new Search.Composition.CompositionModule()
+                              new Search.Composition.CompositionModule(),
+                              new Files.Business.Composition.CompositionModule(),
+                              new Files.Data.Composition.CompositionModule()
                           };
 
             foreach (var module in modules)

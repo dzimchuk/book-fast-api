@@ -17,7 +17,8 @@
     "AutoMapper": "4.2.1",
     "Swashbuckle.SwaggerGen": "6.0.0-beta9",
     "BookFast.Data": "1.0.0-*",
-    "BookFast.Search": "1.0.0-*"
+    "BookFast.Search": "1.0.0-*",
+    "BookFast.Files.Data": "1.0.0-*"
   },
 
   "tools": {

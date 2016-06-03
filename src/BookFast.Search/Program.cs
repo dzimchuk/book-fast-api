@@ -20,7 +20,7 @@ namespace BookFast.Search
             builder.AddUserSecrets();
 
             var configuration = builder.Build();
-            var searchServiceClient = new SearchServiceClient(configuration["search:serviceName"], new SearchCredentials(configuration["search:adminKey"]));
+            var searchServiceClient = new SearchServiceClient(configuration["Azure:Search:ServiceName"], new SearchCredentials(configuration["Azure:Search:adminKey"]));
 
             var index = new BookFastIndex(searchServiceClient, configuration);
             index.ProvisionAsync().Wait();

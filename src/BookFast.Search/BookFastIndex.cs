@@ -19,7 +19,7 @@ namespace BookFast.Search
 
         public async Task ProvisionAsync()
         {
-            var indexName = configuration["search:indexName"];
+            var indexName = configuration["Azure:Search:IndexName"];
             await DeleteIndexAsync(indexName);
             await CreateIndexAsync(indexName);
         }

@@ -14,7 +14,7 @@ namespace BookFast.Search.Composition
     {
         public void AddServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<SearchOptions>(configuration.GetSection("Search"));
+            services.Configure<SearchOptions>(configuration.GetSection("Azure:Search"));
 
             services.AddScoped(provider => CreateSearchIndexClient(provider, true));
             services.AddScoped<ISearchIndexer, SearchIndexer>();
