@@ -1,6 +1,8 @@
-﻿namespace BookFast.Files.Contracts.Models
+﻿using BookFast.Files.Contracts.Models;
+
+namespace BookFast.Api.Models.Representations
 {
-    public class FileAccessToken
+    public class FileAccessTokenRepresentation
     {
         public AccessPermission AccessPermission { get; set; }
         public string Url { get; set; }

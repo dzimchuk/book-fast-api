@@ -7,7 +7,7 @@ using System.IO;
 
 namespace BookFast.Files.Business
 {
-    internal class FileService : IFileService
+    internal class FileAccessService : IFileAccessService
     {
         private readonly IAccessTokenProvider tokenProvider;
         private readonly IFacilityService facilityService;
@@ -15,7 +15,7 @@ namespace BookFast.Files.Business
 
         private const double TokenExpirationTime = 20;
 
-        public FileService(IAccessTokenProvider tokenProvider, IFacilityService facilityService, IAccommodationService accommodationService)
+        public FileAccessService(IAccessTokenProvider tokenProvider, IFacilityService facilityService, IAccommodationService accommodationService)
         {
             this.tokenProvider = tokenProvider;
             this.facilityService = facilityService;
@@ -28,7 +28,7 @@ namespace BookFast.Files.Business
 
             var fileName = GenerateName(originalFileName);
             var path = ConstructPath(accommodation.FacilityId, accommodation.Id, fileName);
-            return await IssueImageUploadTokenAsync(fileName, path);
+            return IssueImageUploadToken(fileName, path);
         }
 
         public async Task<FileAccessToken> IssueFacilityImageUploadTokenAsync(Guid facilityId, string originalFileName)
@@ -37,19 +37,19 @@ namespace BookFast.Files.Business
 
             var fileName = GenerateName(originalFileName);
             var path = ConstructPath(facilityId, fileName);
-            return await IssueImageUploadTokenAsync(fileName, path);
+            return IssueImageUploadToken(fileName, path);
         }
 
-        private async Task<FileAccessToken> IssueImageUploadTokenAsync(string fileName, string path)
+        private FileAccessToken IssueImageUploadToken(string fileName, string path)
         {
-            var token = await tokenProvider.GetFileAccessTokenAsync(path, AccessPermission.Write, DateTimeOffset.Now.AddMinutes(TokenExpirationTime));
+            var url = tokenProvider.GetUrlWithAccessToken(path, AccessPermission.Write, DateTimeOffset.Now.AddMinutes(TokenExpirationTime));
             return new FileAccessToken
             {
                 AccessPermission = AccessPermission.Write,
                 FileName = fileName,
-                Value = token
+                Url = url
             };
-        }   
+        }
 
         private string GenerateName(string originalFileName)
         {

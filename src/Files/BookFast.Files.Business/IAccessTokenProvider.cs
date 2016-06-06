@@ -6,6 +6,6 @@ namespace BookFast.Files.Business
 {
     public interface IAccessTokenProvider
     {
-        Task<string> GetFileAccessTokenAsync(string path, AccessPermission permission, DateTimeOffset expirationTime);
+        string GetUrlWithAccessToken(string path, AccessPermission permission, DateTimeOffset expirationTime);
     }
 }

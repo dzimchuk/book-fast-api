@@ -49,6 +49,7 @@ namespace BookFast.Api.Composition
             services.AddScoped<IFacilityMapper, FacilityMapper>();
             services.AddScoped<IAccommodationMapper, AccommodationMapper>();
             services.AddScoped<IBookingMapper, BookingMapper>();
+            services.AddScoped<IFileAccessMapper, FileAccessMapper>();
         }
     }
 }

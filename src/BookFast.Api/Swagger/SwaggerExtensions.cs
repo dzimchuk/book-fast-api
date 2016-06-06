@@ -18,6 +18,8 @@ namespace BookFast.Api.Swagger
                 });
 
                 options.OperationFilter<DefaultContentTypeOperationFilter>();
+
+                options.DescribeAllEnumsAsStrings();
             });
 
 

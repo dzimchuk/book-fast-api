@@ -9,7 +9,7 @@ namespace BookFast.Files.Business.Composition
     {
         public void AddServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileAccessService, FileAccessService>();
         }
     }
 }

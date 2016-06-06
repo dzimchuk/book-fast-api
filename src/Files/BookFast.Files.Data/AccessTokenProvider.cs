@@ -1,33 +1,57 @@
 ﻿using BookFast.Files.Business;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BookFast.Files.Contracts.Models;
 using Microsoft.Extensions.Options;
-using System.Text.RegularExpressions;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace BookFast.Files.Data
 {
     internal class AccessTokenProvider : IAccessTokenProvider
     {
         private readonly AzureStorageOptions storageOptions;
-        private readonly Regex regexAccountName = new Regex(@"AccountName=(?<name>[^;]+);*", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-        private readonly Regex regexAccountKey = new Regex(@"AccountKey=(?<key>[^;]+);*", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public AccessTokenProvider(IOptions<AzureStorageOptions> storageOptions)
         {
             this.storageOptions = storageOptions.Value;
         }
 
-        public Task<string> GetFileAccessTokenAsync(string path, AccessPermission permission, DateTimeOffset expirationTime)
+        public string GetUrlWithAccessToken(string path, AccessPermission permission, DateTimeOffset expirationTime)
         {
-            throw new NotImplementedException();
+            var storageAccount = CloudStorageAccount.Parse(storageOptions.ConnectionString);
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            var container = blobClient.GetContainerReference(storageOptions.ImageContainer);
+
+            var blob = container.GetBlockBlobReference(path);
+
+            var sasPolicy = new SharedAccessBlobPolicy();
+            sasPolicy.SharedAccessStartTime = DateTime.UtcNow.AddMinutes(-5);
+            sasPolicy.SharedAccessExpiryTime = expirationTime;
+            sasPolicy.Permissions = MapFrom(permission);
+            
+            string sasToken = blob.GetSharedAccessSignature(sasPolicy);
+            return blob.Uri + sasToken;
         }
 
-        private string GetCanonicalName(string path) => $"/blob/{"AccountName"}/{storageOptions.ImageContainer}/{path.Replace('\\', '/')}";
+        private static SharedAccessBlobPermissions MapFrom(AccessPermission permissions)
+        {
+            var blobPermissions = SharedAccessBlobPermissions.None;
+            if ((permissions & AccessPermission.Read) != 0)
+            {
+                blobPermissions |= SharedAccessBlobPermissions.Read;
+            }
 
-        private string AccountName => regexAccountName.Match(storageOptions.ConnectionString).Groups["name"].Value;
-        private string AccountKey => regexAccountName.Match(storageOptions.ConnectionString).Groups["key"].Value;
+            if ((permissions & AccessPermission.Write) != 0)
+            {
+                blobPermissions |= SharedAccessBlobPermissions.Write;
+            }
+
+            if ((permissions & AccessPermission.Delete) != 0)
+            {
+                blobPermissions |= SharedAccessBlobPermissions.Delete;
+            }
+
+            return blobPermissions;
+        }
     }
 }
