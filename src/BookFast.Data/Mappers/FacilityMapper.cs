@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using BookFast.Contracts.Models;
+using BookFast.Data.Mappers.Resolvers;
+using Newtonsoft.Json;
 
 namespace BookFast.Data.Mappers
 {
@@ -19,6 +21,7 @@ namespace BookFast.Data.Mappers
                                                                         .ForMember(dm => dm.Latitude, c => c.MapFrom(m => m.Location.Latitude))
                                                                         .ForMember(dm => dm.Longitude, c => c.MapFrom(m => m.Location.Longitude))
                                                                         .ForMember(dm => dm.Accommodations, c => c.Ignore())
+                                                                        .ForMember(dm => dm.Images, c => c.ResolveUsing<ArrayToStringResolver>())
                                                                         .ReverseMap()
                                                                         .ConvertUsing(dm => new Facility
                                                                                             {
@@ -28,7 +31,8 @@ namespace BookFast.Data.Mappers
                                                                                                           {
                                                                                                               Name = dm.Name,
                                                                                                               Description = dm.Description,
-                                                                                                              StreetAddress = dm.StreetAddress
+                                                                                                              StreetAddress = dm.StreetAddress,
+                                                                                                              Images = string.IsNullOrWhiteSpace(dm.Images) ? null : JsonConvert.DeserializeObject<string[]>(dm.Images)
                                                                                                           },
                                                                                                 Location = new Location
                                                                                                            {

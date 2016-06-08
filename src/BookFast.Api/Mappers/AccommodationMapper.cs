@@ -18,7 +18,8 @@ namespace BookFast.Api.Mappers
                                                                   configuration.CreateMap<Accommodation, AccommodationRepresentation>()
                                                                                .ForMember(vm => vm.Name, config => config.MapFrom(m => m.Details.Name))
                                                                                .ForMember(vm => vm.Description, config => config.MapFrom(m => m.Details.Description))
-                                                                               .ForMember(vm => vm.RoomCount, config => config.MapFrom(m => m.Details.RoomCount));
+                                                                               .ForMember(vm => vm.RoomCount, config => config.MapFrom(m => m.Details.RoomCount))
+                                                                               .ForMember(vm => vm.Images, config => config.MapFrom(m => m.Details.Images));
 
                                                                   configuration.CreateMap<AccommodationData, AccommodationDetails>();
                                                               });

@@ -13,6 +13,7 @@ namespace BookFast.Data.Models
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
         public int AccommodationCount { get; set; }
+        public string Images { get; set; }
         public ICollection<Accommodation> Accommodations { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace BookFast.Data
 
         public Task UpdateAsync(Facility facility)
         {
-            var command = new UpdateFacilityCommand(facility);
+            var command = new UpdateFacilityCommand(facility, mapper);
             return command.ApplyAsync(context);
         }
 

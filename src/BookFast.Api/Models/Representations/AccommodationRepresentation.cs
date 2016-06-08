@@ -28,5 +28,10 @@ namespace BookFast.Api.Models.Representations
         /// Number of rooms
         /// </summary>
         public int RoomCount { get; set; }
+
+        /// <summary>
+        /// Accommodation images
+        /// </summary>
+        public string[] Images { get; set; }
     }
 }

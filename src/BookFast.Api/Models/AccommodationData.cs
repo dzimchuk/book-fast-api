@@ -23,5 +23,10 @@ namespace BookFast.Api.Models
         /// </summary>
         [Range(0, 20)]
         public int RoomCount { get; set; }
+
+        /// <summary>
+        /// Accommodation images
+        /// </summary>
+        public string[] Images { get; set; }
     }
 }

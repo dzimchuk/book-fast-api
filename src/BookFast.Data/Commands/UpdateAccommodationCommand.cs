@@ -9,10 +9,12 @@ namespace BookFast.Data.Commands
     internal class UpdateAccommodationCommand : ICommand<BookFastContext>
     {
         private readonly Accommodation accommodation;
+        private readonly IAccommodationMapper mapper;
 
-        public UpdateAccommodationCommand(Accommodation accommodation)
+        public UpdateAccommodationCommand(Accommodation accommodation, IAccommodationMapper mapper)
         {
             this.accommodation = accommodation;
+            this.mapper = mapper;
         }
 
         public async Task ApplyAsync(BookFastContext model)
@@ -20,9 +22,12 @@ namespace BookFast.Data.Commands
             var existingAccommodation = await model.Accommodations.FirstOrDefaultAsync(a => a.Id == accommodation.Id);
             if (existingAccommodation != null)
             {
-                existingAccommodation.Name = accommodation.Details.Name;
-                existingAccommodation.Description = accommodation.Details.Description;
-                existingAccommodation.RoomCount = accommodation.Details.RoomCount;
+                var dm = mapper.MapFrom(accommodation);
+
+                existingAccommodation.Name = dm.Name;
+                existingAccommodation.Description = dm.Description;
+                existingAccommodation.RoomCount = dm.RoomCount;
+                existingAccommodation.Images = dm.Images;
 
                 await model.SaveChangesAsync();
             }

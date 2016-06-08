@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using BookFast.Contracts.Models;
+using BookFast.Data.Mappers.Resolvers;
+using Newtonsoft.Json;
 
 namespace BookFast.Data.Mappers
 {
@@ -18,6 +20,7 @@ namespace BookFast.Data.Mappers
                                                                         .ForMember(dm => dm.RoomCount, c => c.MapFrom(m => m.Details.RoomCount))
                                                                         .ForMember(dm => dm.Facility, c => c.Ignore())
                                                                         .ForMember(dm => dm.Bookings, c => c.Ignore())
+                                                                        .ForMember(dm => dm.Images, c => c.ResolveUsing<ArrayToStringResolver>())
                                                                         .ReverseMap()
                                                                         .ConvertUsing(dm => new Accommodation
                                                                                             {
@@ -27,7 +30,8 @@ namespace BookFast.Data.Mappers
                                                                                                           {
                                                                                                               Name = dm.Name,
                                                                                                               Description = dm.Description,
-                                                                                                              RoomCount = dm.RoomCount
+                                                                                                              RoomCount = dm.RoomCount,
+                                                                                                              Images = string.IsNullOrWhiteSpace(dm.Images) ? null : JsonConvert.DeserializeObject<string[]>(dm.Images)
                                                                                                           }
                                                                                             });
                                                               });

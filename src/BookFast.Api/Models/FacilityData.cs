@@ -33,5 +33,10 @@ namespace BookFast.Api.Models
         /// Longitude
         /// </summary>
         public double? Latitude { get; set; }
+
+        /// <summary>
+        /// Facility images
+        /// </summary>
+        public string[] Images { get; set; }
     }
 }

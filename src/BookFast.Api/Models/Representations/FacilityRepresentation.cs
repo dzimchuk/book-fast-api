@@ -35,6 +35,11 @@ namespace BookFast.Api.Models.Representations
         public double? Latitude { get; set; }
 
         /// <summary>
+        /// Facility images
+        /// </summary>
+        public string[] Images { get; set; }
+
+        /// <summary>
         /// Number of accommodations
         /// </summary>
         public int AccommodationCount { get; set; }

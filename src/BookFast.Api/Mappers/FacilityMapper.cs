@@ -20,7 +20,8 @@ namespace BookFast.Api.Mappers
                                                                                .ForMember(vm => vm.Description, config => config.MapFrom(m => m.Details.Description))
                                                                                .ForMember(vm => vm.StreetAddress, config => config.MapFrom(m => m.Details.StreetAddress))
                                                                                .ForMember(vm => vm.Latitude, config => config.MapFrom(m => m.Location.Latitude))
-                                                                               .ForMember(vm => vm.Longitude, config => config.MapFrom(m => m.Location.Longitude));
+                                                                               .ForMember(vm => vm.Longitude, config => config.MapFrom(m => m.Location.Longitude))
+                                                                               .ForMember(vm => vm.Images, config => config.MapFrom(m => m.Details.Images));
 
                                                                   configuration.CreateMap<FacilityData, FacilityDetails>();
                                                               });

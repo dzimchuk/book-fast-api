@@ -29,7 +29,7 @@ namespace BookFast.Api.Controllers
         /// <param name="originalFileName">Image file name</param>
         /// <returns></returns>
         [HttpGet("/api/facilities/{id}/image-token")]
-        [SwaggerOperation("facility-image-upload-token")]
+        [SwaggerOperation("get-facility-image-upload-token")]
         [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(FileAccessTokenRepresentation))]
         [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
         [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found")]
@@ -60,7 +60,7 @@ namespace BookFast.Api.Controllers
         /// <param name="originalFileName">Image file name</param>
         /// <returns></returns>
         [HttpGet("/api/accommodations/{id}/image-token")]
-        [SwaggerOperation("accommodation-image-upload-token")]
+        [SwaggerOperation("get-accommodation-image-upload-token")]
         [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(FileAccessTokenRepresentation))]
         [SwaggerResponse(System.Net.HttpStatusCode.BadRequest, Description = "Invalid parameters")]
         [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Accommodation not found")]

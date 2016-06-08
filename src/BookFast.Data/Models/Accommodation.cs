@@ -11,6 +11,7 @@ namespace BookFast.Data.Models
         public Guid FacilityId { get; set; }
         public int RoomCount { get; set; }
         public Facility Facility { get; set; }
+        public string Images { get; set; }
         public ICollection<Booking> Bookings { get; set; }
     }
 }
