@@ -21,7 +21,7 @@ namespace BookFast.Data.Mappers
                                                                         .ForMember(dm => dm.Latitude, c => c.MapFrom(m => m.Location.Latitude))
                                                                         .ForMember(dm => dm.Longitude, c => c.MapFrom(m => m.Location.Longitude))
                                                                         .ForMember(dm => dm.Accommodations, c => c.Ignore())
-                                                                        .ForMember(dm => dm.Images, c => c.ResolveUsing<ArrayToStringResolver>())
+                                                                        .ForMember(dm => dm.Images, c => c.ResolveUsing<ArrayToStringResolver>().FromMember(m => m.Details.Images))
                                                                         .ReverseMap()
                                                                         .ConvertUsing(dm => new Facility
                                                                                             {

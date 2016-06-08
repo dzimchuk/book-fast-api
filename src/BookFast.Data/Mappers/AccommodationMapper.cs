@@ -20,7 +20,7 @@ namespace BookFast.Data.Mappers
                                                                         .ForMember(dm => dm.RoomCount, c => c.MapFrom(m => m.Details.RoomCount))
                                                                         .ForMember(dm => dm.Facility, c => c.Ignore())
                                                                         .ForMember(dm => dm.Bookings, c => c.Ignore())
-                                                                        .ForMember(dm => dm.Images, c => c.ResolveUsing<ArrayToStringResolver>())
+                                                                        .ForMember(dm => dm.Images, c => c.ResolveUsing<ArrayToStringResolver>().FromMember(m => m.Details.Images))
                                                                         .ReverseMap()
                                                                         .ConvertUsing(dm => new Accommodation
                                                                                             {
