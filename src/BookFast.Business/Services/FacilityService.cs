@@ -35,24 +35,27 @@ namespace BookFast.Business.Services
 
         public async Task<Facility> CreateAsync(FacilityDetails details)
         {
-            var facility = new Facility
-                           {
-                               Id = Guid.NewGuid(),
-                               Details = details,
-                               Location = new Location(),
-                               Owner = securityContext.GetCurrentTenant()
-                           };
+            details.Images = ImagePathHelper.CleanUp(details.Images);
 
+            var facility = new Facility
+            {
+                Id = Guid.NewGuid(),
+                Details = details,
+                Location = new Location(),
+                Owner = securityContext.GetCurrentTenant()
+            };
+            
             await dataSource.CreateAsync(facility);
             return facility;
         }
-
+        
         public async Task<Facility> UpdateAsync(Guid facilityId, FacilityDetails details)
         {
             var facility = await dataSource.FindAsync(facilityId);
             if (facility == null)
                 throw new FacilityNotFoundException(facilityId);
 
+            details.Images = ImagePathHelper.Merge(facility.Details.Images, details.Images);
             facility.Details = details;
             await dataSource.UpdateAsync(facility);
 

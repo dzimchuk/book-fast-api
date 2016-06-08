@@ -28,7 +28,7 @@ namespace BookFast.Files.Business
 
             var fileName = GenerateName(originalFileName);
             var path = ConstructPath(accommodation.FacilityId, accommodation.Id, fileName);
-            return IssueImageUploadToken(fileName, path);
+            return IssueImageUploadToken(path);
         }
 
         public async Task<FileAccessToken> IssueFacilityImageUploadTokenAsync(Guid facilityId, string originalFileName)
@@ -37,16 +37,15 @@ namespace BookFast.Files.Business
 
             var fileName = GenerateName(originalFileName);
             var path = ConstructPath(facilityId, fileName);
-            return IssueImageUploadToken(fileName, path);
+            return IssueImageUploadToken(path);
         }
 
-        private FileAccessToken IssueImageUploadToken(string fileName, string path)
+        private FileAccessToken IssueImageUploadToken(string path)
         {
             var url = tokenProvider.GetUrlWithAccessToken(path, AccessPermission.Write, DateTimeOffset.Now.AddMinutes(TokenExpirationTime));
             return new FileAccessToken
             {
                 AccessPermission = AccessPermission.Write,
-                FileName = fileName,
                 Url = url
             };
         }

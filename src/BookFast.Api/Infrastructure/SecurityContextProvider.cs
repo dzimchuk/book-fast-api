@@ -11,7 +11,7 @@ namespace BookFast.Api.Infrastructure
 
         public string GetCurrentUser()
         {
-            return FindFirstValue(ClaimTypes.Name);
+            return FindFirstValue(BookFastClaimTypes.ObjectId);
         }
 
         public string GetCurrentTenant()

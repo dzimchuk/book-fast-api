@@ -40,6 +40,7 @@ namespace BookFast.Business.Services
         {
             await facilityService.CheckFacilityAsync(facilityId);
 
+            details.Images = ImagePathHelper.CleanUp(details.Images);
             var accommodation = new Accommodation
                                 {
                                     Id = Guid.NewGuid(),
@@ -66,6 +67,7 @@ namespace BookFast.Business.Services
             if (facility == null)
                 throw new FacilityNotFoundException(accommodation.FacilityId);
 
+            details.Images = ImagePathHelper.Merge(accommodation.Details.Images, details.Images);
             accommodation.Details = details;
             await accommodationDataSource.UpdateAsync(accommodation);
 
