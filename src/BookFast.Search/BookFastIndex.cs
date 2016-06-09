@@ -53,7 +53,8 @@ namespace BookFast.Search
                                               new Field("FacilityName", DataType.String, AnalyzerName.EnMicrosoft) { IsSearchable = true },
                                               new Field("FacilityDescription", DataType.String, AnalyzerName.EnMicrosoft) { IsSearchable = true },
                                               new Field("Location", DataType.GeographyPoint) { IsFilterable = true },
-                                              new Field("RoomCount", DataType.Int32) { IsFilterable = true }
+                                              new Field("RoomCount", DataType.Int32) { IsFilterable = true },
+                                              new Field("Images", DataType.Collection(DataType.String)) { IsFilterable = false }
                                           },
                 Suggesters = new List<Suggester> { suggester }
             };

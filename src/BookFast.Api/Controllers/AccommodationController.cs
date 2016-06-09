@@ -33,6 +33,7 @@ namespace BookFast.Api.Controllers
         [SwaggerOperation("list-accommodations")]
         [SwaggerResponse(System.Net.HttpStatusCode.OK, Type = typeof(IEnumerable<AccommodationRepresentation>))]
         [SwaggerResponse(System.Net.HttpStatusCode.NotFound, Description = "Facility not found")]
+        [AllowAnonymous]
         public async Task<IActionResult> List(Guid facilityId)
         {
             try

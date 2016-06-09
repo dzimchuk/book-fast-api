@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BookFast.Search": {
+      "commandName": "Project",
+      "commandLineArgs": "provision"
+    }
+  }
+}

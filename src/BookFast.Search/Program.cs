@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Azure.Search;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace BookFast.Search
 {
@@ -12,11 +13,16 @@ namespace BookFast.Search
             {
                 Provision();
             }
+            else
+            {
+                Console.WriteLine("Usage: dotnet run provision");
+            }
         }
 
         private static void Provision()
         {
             var builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddUserSecrets();
 
             var configuration = builder.Build();

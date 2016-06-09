@@ -40,7 +40,8 @@ namespace BookFast.Search
                        { "FacilityName", facility.Details.Name },
                        { "FacilityDescription", facility.Details.Description },
                        { "Location", CreateGeographyPoint(facility.Location) },
-                       { "RoomCount", accommodation.Details.RoomCount }
+                       { "RoomCount", accommodation.Details.RoomCount },
+                       { "Images", accommodation.Details.Images }
                    };
         }
 
