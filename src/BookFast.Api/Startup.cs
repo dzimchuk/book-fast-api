@@ -64,7 +64,7 @@ namespace BookFast.Api
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
 
-                MetadataAddress = $"{b2cAuthOptions.Value.Authority}/.well-known/openid-configuration?p={b2cAuthOptions.Value.SignInPolicy}",
+                MetadataAddress = $"{b2cAuthOptions.Value.Authority}/.well-known/openid-configuration?p={b2cAuthOptions.Value.Policy}",
                 Audience = b2cAuthOptions.Value.Audience,
 
                 Events = new JwtBearerEvents

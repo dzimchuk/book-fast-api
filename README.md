@@ -21,7 +21,7 @@ Use environment variables, user-secrets or appsettings.json to configure the pro
         	"Instance": "",
         	"TenantId": "",
         	"Audience": "",
-        	"SignInPolicy": ""
+        	"Policy": ""
       	}
 	}
 },

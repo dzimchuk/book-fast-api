@@ -8,6 +8,6 @@
         public string Authority => $"{Instance}{TenantId}/v2.0";
 
         public string Audience { get; set; }
-        public string SignInPolicy { get; set; }
+        public string Policy { get; set; }
     }
 }
