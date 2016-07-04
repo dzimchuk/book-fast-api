@@ -15,7 +15,7 @@
     "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0",
     "Microsoft.AspNetCore.Authentication.JwtBearer": "1.0.0",
     "AutoMapper": "4.2.1",
-    "Swashbuckle.SwaggerGen": "6.0.0-beta9",
+    "Swashbuckle.SwaggerGen": "6.0.0-beta901",
     "BookFast.Data": "1.0.0-*",
     "BookFast.Search": "1.0.0-*",
     "BookFast.Files.Data": "1.0.0-*",

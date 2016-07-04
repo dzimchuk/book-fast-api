@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
-using Swashbuckle.SwaggerGen.Generator;
+using Swashbuckle.Swagger.Model;
 
 namespace BookFast.Api.Swagger
 {
