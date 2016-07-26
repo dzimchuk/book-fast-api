@@ -102,6 +102,11 @@ namespace BookFast.Api
                 Authority = authOptions.Value.Authority,
                 Audience = authOptions.Value.Audience,
 
+                TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidIssuers = authOptions.Value.ValidIssuersAsArray
+                },
+
                 Events = new JwtBearerEvents
                 {
                     OnAuthenticationFailed = ctx =>
